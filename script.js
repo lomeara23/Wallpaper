@@ -1,6 +1,8 @@
-var r = document.querySelector('.root');
 var tileCount = Math.floor(document.documentElement.clientWidth / 40) * Math.floor(document.documentElement.clientHeight / 40)
 var currentWindowSize = document.documentElement.clientWidth * document.documentElement.clientHeight;
+
+var pointBase = [22,22,22]
+var pointColor = [255,136,0]
 
 function updateWindowSize() {
   var columns = Math.floor(parseInt(document.documentElement.clientWidth) / 40)
@@ -34,11 +36,8 @@ document.addEventListener('mousemove', function() {
 function handleMouseMove(event) {
   var eventDoc, doc, body;
 
-  event = event || window.event; // IE-ism
+  event = event || window.event;
 
-  // If pageX/Y aren't available and clientX/Y are,
-  // calculate pageX/Y - logic taken from jQuery.
-  // (This is to support old IE)
   if (event.pageX == null && event.clientX != null) {
     eventDoc = (event.target && event.target.ownerDocument) || document;
     doc = eventDoc.documentElement;
@@ -52,7 +51,6 @@ function handleMouseMove(event) {
       (doc && doc.clientTop || body && body.clientTop || 0);
   }
 
-  // Use event.pageX / event.pageY here
   let mouseX = event.pageX;
   let mouseY = event.pageY;
 
@@ -71,17 +69,20 @@ function handleMouseMove(event) {
     let distY = pointY - mouseY
     let distTotal = Math.floor(Math.sqrt(Math.pow(distX, 2) + Math.pow(distY, 2)))
     if (distTotal < 200) {
-      var redness = (255 - distTotal) * (255 / 200);
+      var proxPercent = (200-distTotal)/200
+      var redness = pointBase[0]+proxPercent*(pointColor[0]-pointBase[0]);
+      var greenness = pointBase[1]+proxPercent*(pointColor[1]-pointBase[1]);
+      var blueness = pointBase[2]+proxPercent*(pointColor[2]-pointBase[2]);
       var displacement = 15*Math.pow(1.025, (-0.005*Math.pow(distTotal,2)))
       var displacementScalar = displacement/distTotal
       var avoidanceX = distX*displacementScalar
       var avoidanceY = distY*displacementScalar
 
       point.style.transform = "translate("+avoidanceX+"px, "+avoidanceY+"px)"
-      dot.style.fill = "rgb(" + redness + ",0,0)";
+      dot.style.fill = "rgb(" + redness + ","+greenness+","+blueness+")";
     } else {
       point.style.transform = "translate(0px, 0px)"
-      dot.style.fill = "black";
+      dot.style.fill = "rgb("+pointBase[0]+","+pointBase[1]+","+pointBase[2]+")";
     }
   }
 }

@@ -19,3 +19,7 @@ body{
 .tile {
     margin: auto;
   }
+
+.point {
+  fill: rgb(22,22,22);
+}
