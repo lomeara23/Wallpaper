@@ -1,0 +1,21 @@
+.root {
+    --columns: 0;
+}
+
+html, body 
+{ 
+ height: 100%;
+ overflow: hidden
+}
+body{
+  background-color: rgb(33,33,33);
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat( var(--columns), auto);
+  }
+
+.tile {
+    margin: auto;
+  }
