@@ -2,11 +2,14 @@
     --columns: 0;
 }
 
-body,html{
+/* body,html{
   overflow: hidden;
-}
+} */
 
 body{
+  padding: 0;
+  margin:0;
+  
   position: absolute;
   top: 0;
   bottom: 0;

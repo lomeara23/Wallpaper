@@ -2,12 +2,10 @@ var currentWindowSize = [innerWidth,innerHeight];
 
 var columns = Math.floor(parseInt(innerWidth) / 40)-1
 var rows = Math.floor(parseInt(innerHeight) / 40) 
-
 var tileCount = columns * rows
 
-
 var pointBase = [233,30,99]
-var pointColor = [0,255,255]
+var pointColor = [0,255,255] 
 
 function updateWindowSize()  {
   var columns = Math.floor(parseInt(innerWidth) / 40)-1
