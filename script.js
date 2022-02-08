@@ -1,11 +1,16 @@
-var tileCount = Math.floor(document.documentElement.clientWidth / 40) * Math.floor(document.documentElement.clientHeight / 40)
-var currentWindowSize = document.documentElement.clientWidth * document.documentElement.clientHeight;
+var currentWindowSize = [innerWidth,innerHeight];
 
-var pointBase = [22,22,22]
-var pointColor = [255,136,0]
+var columns = Math.floor(parseInt(innerWidth) / 40)-1
+var rows = Math.floor(parseInt(innerHeight) / 40) 
 
-function updateWindowSize() {
-  var columns = Math.floor(parseInt(document.documentElement.clientWidth) / 40)
+var tileCount = columns * rows
+
+
+var pointBase = [233,30,99]
+var pointColor = [0,255,255]
+
+function updateWindowSize()  {
+  var columns = Math.floor(parseInt(innerWidth) / 40)-1
   document.documentElement.style.setProperty('--columns', columns)
 }
 
@@ -20,9 +25,13 @@ multiplyNode(document.querySelector('.tile'), tileCount, true);
 
 window.onresize = function() {
   updateWindowSize();
-  var tempWindowSize = document.documentElement.clientWidth * document.documentElement.clientHeight
-  if (tempWindowSize > currentWindowSize) {
-    var newTiles = Math.floor(document.documentElement.clientWidth / 40) * Math.floor(document.documentElement.clientHeight / 40)
+  var tempWindowSize = [innerWidth,innerHeight]
+
+//TODO: Rework window resize adding points
+
+  if (tempWindowSize[0] > currentWindowSize[0] || tempWindowSize[1] > currentWindowSize[1]) {
+    var newTiles = (Math.floor(innerWidth / 40) * Math.floor(innerHeight / 40))-tileCount
+    tileCount = newTiles
 
     multiplyNode(document.querySelector('.tile'), newTiles, true);
   }
@@ -86,3 +95,15 @@ function handleMouseMove(event) {
     }
   }
 }
+
+document.addEventListener('mouseleave', function() {
+  console.log("Left Screen")
+  
+  let tile = document.getElementsByClassName("tile");
+  for (i = 0; i < tile.length; i++) {
+    let point = tile[i].children[0];
+    let dot = point.children[0];    
+      point.style.transform = "translate(0px, 0px)"
+      dot.style.fill = "rgb("+pointBase[0]+","+pointBase[1]+","+pointBase[2]+")";
+    }
+  }, false);
