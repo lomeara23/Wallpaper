@@ -20,11 +20,12 @@ body{
 
 .wrapper {
     display: grid;
-    grid-template-columns: repeat( var(--columns), auto);
-    grid-auto-rows: minmax(40px,auto);
+    grid-template-columns: repeat( var(--columns), 1fr);
+    grid-auto-rows: minmax(40px,1fr);
   }
 
 .tile {
+    overflow: hidden;
     margin: auto;
   }
 
